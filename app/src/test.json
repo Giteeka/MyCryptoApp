@@ -1,0 +1,31 @@
+{
+  "Response": "Success",
+  "Message": "Coin list succesfully returned!",
+  "Data": {
+    "42": {
+      "Id": "4321",
+      "Url": "/coins/42/overview",
+      "ImageUrl": "/media/12318415/42.png",
+      "Name": "42",
+      "Symbol": "42",
+      "CoinName": "42 Coin",
+      "FullName": "42 Coin (42)",
+      "Algorithm": "Scrypt",
+      "ProofType": "PoW/PoS",
+      "FullyPremined": "0",
+      "TotalCoinSupply": "42",
+      "BuiltOn": "N/A",
+      "SmartContractAddress": "N/A",
+      "PreMinedValue": "N/A",
+      "TotalCoinsFreeFloat": "N/A",
+      "SortOrder": "34",
+      "Sponsored": false,
+      "IsTrading": true
+    }
+  },
+  "BaseImageUrl": "https://www.cryptocompare.com",
+  "BaseLinkUrl": "https://www.cryptocompare.com",
+  "RateLimit": {},
+  "HasWarning": false,
+  "Type": 100
+}
