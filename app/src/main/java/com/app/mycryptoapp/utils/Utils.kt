@@ -1,5 +1,8 @@
 package com.app.mycryptoapp.utils
 
+import java.math.RoundingMode
+import java.text.DecimalFormat
+
 /**
  *
  * Created by giteeka on 11/27/2018.
@@ -15,7 +18,6 @@ object Utils {
     // so this method will return cryptoConverter(25*3805)
     // Output on screen 25 BTC = 95125 USD
 
-
     fun cryptoConverter(coinQty: Double, toCoinValue: Double?): Double {
         var convertedValueOfCoin: Double
         try {
@@ -26,4 +28,12 @@ object Utils {
         return convertedValueOfCoin
     }
 
+    /**
+     * Round up to  6 decimal places
+     */
+    fun getValueUpToSixDecimal(convertedValue: Double): String {
+        val df = DecimalFormat("##.######")
+        df.roundingMode = RoundingMode.CEILING
+        return df.format(convertedValue)
+    }
 }

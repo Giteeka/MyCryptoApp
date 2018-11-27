@@ -9,19 +9,14 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import com.app.mycryptoapp.R
 import com.app.mycryptoapp.data.Coin
-import com.app.mycryptoapp.network.ApiClient
-import com.app.mycryptoapp.network.ApiService
+import com.app.mycryptoapp.data.CoinPriceViewModel
 import com.app.mycryptoapp.ui.base.BaseFragment
 import com.app.mycryptoapp.utils.Utils
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonElement
-import com.google.gson.reflect.TypeToken
 import kotlinx.android.synthetic.main.fragment_currency_convertor.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 
 /**
  * Created by Giteeka
@@ -89,8 +84,21 @@ class CryptoToCryptoConversionFragment : BaseFragment() {
     }
 
 
+    private val viewModel by lazy(LazyThreadSafetyMode.NONE) {
+        ViewModelProviders.of(this).get(CoinPriceViewModel::class.java)
+    }
+
     override fun initiateUI() {
-        initApi()
+        baseCoin = arguments?.getParcelable<Coin>("coin")
+        tv_from_coin.text = "${baseCoin?.CoinName} (${baseCoin?.Symbol})"
+
+        viewModel.loadCurrencyValueMap(baseCoin, getList()).observe(this, Observer { map ->
+            currencyValueMap = map
+        })
+        viewModel.error?.observe(this, Observer { errorMessage ->
+            showError(errorMessage)
+        })
+
     }
 
     override fun setListener() {
@@ -138,39 +146,12 @@ class CryptoToCryptoConversionFragment : BaseFragment() {
         try {
             val coinQty = et_price.text.toString().toDouble()
             val selectedFiatValue = currencyValueMap?.get(coin.Symbol)
-            tv_value.text = "${et_price.text} ${baseCoin?.CoinName} (${baseCoin?.Symbol}) = ${Utils.cryptoConverter(coinQty, selectedFiatValue)} ${coin.Name} (${coin.Symbol})"
+            val convertedValue = Utils.cryptoConverter(coinQty, selectedFiatValue)
+            tv_value.text = "${et_price.text} ${baseCoin?.CoinName} (${baseCoin?.Symbol}) = ${Utils.getValueUpToSixDecimal(convertedValue)} ${coin.Name} (${coin.Symbol})"
 
         } catch (e: NumberFormatException) {
             tv_value.text = getString(R.string.label_error_output)
         }
-    }
-
-
-    /**
-     * API for get value of base coin in different crypto currency
-     */
-    private fun initApi() {
-        baseCoin = arguments?.getParcelable("coin")
-        tv_from_coin.text = "${baseCoin?.CoinName} (${baseCoin?.Symbol})"
-        val apiService = ApiClient.getClient().create(ApiService::class.java)
-        // convert coin object array list to coin symbol comma separated string for api
-        val getCoinApi = baseCoin?.Symbol?.let { apiService.getCoin(it, getList().asSequence().map { coin -> coin.Symbol }.joinToString(",")) }
-        getCoinApi?.enqueue(object : Callback<JsonElement> {
-
-            override fun onFailure(call: Call<JsonElement>, t: Throwable) {
-                showError(t.message)
-            }
-
-            override fun onResponse(call: Call<JsonElement>, response: Response<JsonElement>) {
-                if (response.isSuccessful) {
-                    val element = response.body()
-                    val type = object : TypeToken<Map<String, Double>>() {}.type
-                    currencyValueMap = GsonBuilder().create().fromJson(element?.asJsonObject, type)
-                } else {
-                    showError(response.errorBody().toString())
-                }
-            }
-        })
     }
 
 

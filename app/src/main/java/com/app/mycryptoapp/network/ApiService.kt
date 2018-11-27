@@ -15,6 +15,7 @@ interface ApiService {
 
     object API_STATUS {
         val SUCCESS = "Success"
+        val ERROR = "error"
     }
 
     @GET("all/coinlist")

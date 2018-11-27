@@ -4,10 +4,10 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.app.mycryptoapp.R
 import com.app.mycryptoapp.data.CoinViewModel
-import com.app.mycryptoapp.network.ApiClient
 import com.app.mycryptoapp.network.ApiResponse
 import com.app.mycryptoapp.network.ApiService
 import com.app.mycryptoapp.ui.base.BaseActivity
@@ -17,10 +17,7 @@ import com.app.mycryptoapp.utils.PreferenceHelper.PREF_IS_DATA_SAVED
 import com.app.mycryptoapp.utils.PreferenceHelper.get
 import com.app.mycryptoapp.utils.PreferenceHelper.set
 import kotlinx.android.synthetic.main.activity_splash.*
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import java.util.*
+
 
 /**
  *
@@ -52,7 +49,7 @@ class SplashActivity : BaseActivity() {
         if (isDataSaved == true) {
             startHomeScreen()
         } else {
-            fetchDataFromApi()
+            loadCoinList()
         }
     }
 
@@ -76,45 +73,28 @@ class SplashActivity : BaseActivity() {
      * Api call for fetching coin list using retrofit client
      *
      * */
-    private fun fetchDataFromApi() {
+    private fun loadCoinList() {
         progress_horizontal.visibility = View.VISIBLE
         tv_fetching_list.visibility = View.VISIBLE
-        val apiService = ApiClient.getClient().create(ApiService::class.java)
-        val getAllCoinApi = apiService.allCoinApi()
-        getAllCoinApi.enqueue(object : Callback<ApiResponse> {
-            override fun onFailure(call: Call<ApiResponse>, t: Throwable) {
-                progress_horizontal.visibility = View.GONE
-                showError(t.message)
-            }
 
-            override fun onResponse(call: Call<ApiResponse>, response: Response<ApiResponse>) {
+        viewModel.getApiResponse().observe(this, Observer<ApiResponse> { apiResponse ->
+            if (apiResponse != null) {
                 progress_horizontal.visibility = View.GONE
-                val body = response.body()
-                if (body != null) {
-                    if (body.Response.equals(ApiService.API_STATUS.SUCCESS, ignoreCase = true)) {
-                        if (body.Data != null) {
-                            tv_fetching_list.text = getString(R.string.list_fetched_successfully)
-                            saveDataToDatabase(body)
-                        } else {
-                            tv_fetching_list.text = getString(R.string.no_coins_list_found)
-                        }
-                    } else {
-                        tv_fetching_list.text = body.Message
-                    }
-                } else {
-                    tv_fetching_list.text = getString(R.string.oops_something_went_wrong)
-                }
+                if (apiResponse.Response == ApiService.API_STATUS.SUCCESS) {
+                    tv_fetching_list.text = getString(R.string.list_fetched_successfully)
+                    saveDataToPreferences(apiResponse)
+                } else
+                    tv_fetching_list.text = apiResponse.Message
+            } else {
+                tv_fetching_list.text = getString(R.string.oops_something_went_wrong)
             }
-
         })
     }
 
     /**
-     * Save Api response data to Room database using view model
+     * Save base url and  and image url in shared preference
      * */
-    private fun saveDataToDatabase(body: ApiResponse) {
-        val listOfCoins = ArrayList(body.Data?.values)
-        viewModel.insertAll(listOfCoins)
+    private fun saveDataToPreferences(body: ApiResponse) {
         val prefs = getPrefHelper()
         prefs?.set(PreferenceHelper.PREF_BASE_LINK_URL, body.BaseLinkUrl)
         prefs?.set(PreferenceHelper.PREF_BASE_IMAGE_URL, body.BaseImageUrl)
