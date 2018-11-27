@@ -8,7 +8,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 /**
  *
- * Created by admin on 11/23/2018.
+ * Created by Giteeka on 11/23/2018.
  */
 object ApiClient {
     private const val BASE_URL = "https://min-api.cryptocompare.com/data/"
