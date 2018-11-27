@@ -13,7 +13,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * Created by admin on 11/27/2018.
+ * Created by Giteeka on 11/27/2018.
  */
 class CoinPriceViewModel(app: Application) : AndroidViewModel(app) {
 
