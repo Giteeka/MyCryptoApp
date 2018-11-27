@@ -2,7 +2,13 @@ package com.app.mycryptoapp.data
 
 import androidx.room.*
 import android.content.Context
-
+/**
+ *
+ * Created by Giteeka on 11/22/2018.
+ *
+ * Room database class instance
+ *
+ */
 @Database(entities = [Coin::class], version = 1)
 abstract class CoinDatabase : RoomDatabase() {
     abstract fun coinDao(): CoinDao

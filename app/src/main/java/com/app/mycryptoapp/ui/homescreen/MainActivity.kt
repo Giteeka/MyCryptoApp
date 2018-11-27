@@ -16,6 +16,13 @@ import com.app.mycryptoapp.utils.PreferenceHelper
 import com.app.mycryptoapp.utils.PreferenceHelper.get
 import kotlinx.android.synthetic.main.activity_main.*
 
+/**
+ *
+ * Created by Giteeka on 11/22/2018.
+ *
+ * Home screen showing list of coins
+ *
+ */
 class MainActivity : BaseActivity() {
 
     var TAG = "MainActivity"

@@ -5,7 +5,9 @@ import java.text.DecimalFormat
 
 /**
  *
- * Created by admin on 11/27/2018.
+ * Created by giteeka on 11/27/2018.
+ *
+ * common Utility functions which will be used to across whole application
  */
 object Utils {
 
@@ -21,7 +23,7 @@ object Utils {
         var roundUpToTwoDecimal: Double
         try {
             val convertedValueOfCoin = coinQty * (toCoinValue ?: 0.0)
-            val df = DecimalFormat("#.##")
+            val df = DecimalFormat("#.#########")
             df.roundingMode = RoundingMode.CEILING
             roundUpToTwoDecimal = df.format(convertedValueOfCoin).toDouble()
         } catch (e: Exception) {

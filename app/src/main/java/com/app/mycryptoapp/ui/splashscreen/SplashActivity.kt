@@ -22,7 +22,13 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.*
 
-
+/**
+ *
+ * Created by Giteeka on 11/22/2018.
+ *
+ * Splash screen
+ *
+ */
 class SplashActivity : BaseActivity() {
 
     private val SPLASH_TIME_OUT = 2000L

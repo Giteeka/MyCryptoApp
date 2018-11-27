@@ -14,7 +14,11 @@ import com.app.mycryptoapp.utils.GlideApp
 import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 
-// create click listner for click item of coin
+/**
+ *
+ * Recycler view adapter for coin list
+ *
+ */
 open class CoinListAdapter(val onItemClick: (coin: Coin?) -> Unit) : PagedListAdapter<Coin, CoinListAdapter.CoinViewHolder>(diffCallback) {
 
     internal var baseImageUrl: String = ""

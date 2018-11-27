@@ -24,7 +24,10 @@ import retrofit2.Callback
 import retrofit2.Response
 
 /**
- * A simple [Fragment] subclass.
+ * Created by Giteeka
+ * Second tab fragment
+ * Convert the selected crypto coin value in top 10 crypto currency like, BTC, ETH etc.
+ * Calculator for crypto currency to crypto currency
  */
 class CryptoToCryptoConversionFragment : BaseFragment() {
     /**
@@ -91,6 +94,7 @@ class CryptoToCryptoConversionFragment : BaseFragment() {
     }
 
     override fun setListener() {
+
         spinner.adapter = ArrayAdapter(mContext, android.R.layout.simple_spinner_dropdown_item,
                 // map object array list to string array to load dropdown data
                 getList().map { coin -> "${coin.Name} (${coin.Symbol})" })
@@ -122,6 +126,9 @@ class CryptoToCryptoConversionFragment : BaseFragment() {
                 })
     }
 
+    /**
+     * Convert crypto currency to another crypto currency
+     */
     private fun convertValue(s: Int) {
         val coin = getList().get(s)
         if (et_price.text.toString().isBlank()) {
@@ -139,6 +146,9 @@ class CryptoToCryptoConversionFragment : BaseFragment() {
     }
 
 
+    /**
+     * API for get value of base coin in different crypto currency
+     */
     private fun initApi() {
         baseCoin = arguments?.getParcelable("coin")
         tv_from_coin.text = "${baseCoin?.CoinName} (${baseCoin?.Symbol})"

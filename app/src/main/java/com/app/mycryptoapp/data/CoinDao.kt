@@ -7,8 +7,12 @@ import androidx.room.Insert
 import androidx.room.Query
 
 
-/***
- * Database crud operation like insert deleted select
+/**
+ *
+ * Created by Giteeka on 11/22/2018.
+ * Database CRUD operation like insert deleted select
+ *
+ *
  */
 @Dao
 interface CoinDao {

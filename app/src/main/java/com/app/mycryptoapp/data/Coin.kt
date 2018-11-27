@@ -8,6 +8,7 @@ import kotlinx.android.parcel.Parcelize
 /**
  *
  * Created by Giteeka on 11/22/2018.
+ * Object class of coin
  */
 @Entity
 @Parcelize

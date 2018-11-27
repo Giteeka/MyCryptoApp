@@ -5,8 +5,8 @@ import android.content.SharedPreferences
 import android.preference.PreferenceManager
 
 /**
- *
- * Created by admin on 11/23/2018.
+ * Created by Giteeka on 11/23/2018.
+ * Utility class to access shared preference and setter/getter method to utilize shared preference
  */
 object PreferenceHelper {
 

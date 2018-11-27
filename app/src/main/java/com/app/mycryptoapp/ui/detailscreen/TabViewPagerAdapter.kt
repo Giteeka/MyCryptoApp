@@ -6,9 +6,8 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.app.mycryptoapp.data.Coin
 
 /**
- * Fragment pager adapter
- * */
-
+ * Fragment pager adapter to handle tabs with view pager
+ */
 class TabViewPagerAdapter(fm: FragmentManager, var coin: Coin) : FragmentPagerAdapter(fm) {
 
     override fun getItem(position: Int): Fragment {

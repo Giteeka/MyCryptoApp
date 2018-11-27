@@ -12,7 +12,14 @@ import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.activity_detail.*
 
-
+/**
+ *
+ * Created by Giteeka on 11/23/2018.
+ *
+ * Detail screen of Coin
+ * Calculator for crypto currency
+ *
+ */
 class DetailActivity : BaseActivity() {
 
     private val TAG = "DetailActivity"

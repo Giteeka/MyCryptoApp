@@ -25,6 +25,8 @@ import retrofit2.Response
 
 
 /**
+ * Created by Giteeka
+ *
  * First tab fragment
  * Convert the selected cryto coin value in top 10 Fiat currency like, USD, INR etc.
  * Calculator for crypto currency to fiat currency
@@ -116,6 +118,9 @@ class CryptoToFiatConversionFragment : BaseFragment() {
         })
     }
 
+    /**
+     * Convert crypto currency to fiat currency
+     */
     private fun convertValue(s: Int) {
         val coin = getList().get(s)
 
@@ -129,6 +134,9 @@ class CryptoToFiatConversionFragment : BaseFragment() {
     }
 
 
+    /**
+     * API for get value of base coin in different fiat currency
+     */
     private fun initApi() {
         baseCoin = arguments?.getParcelable<Coin>("coin")
         tv_from_coin.text = "${baseCoin?.CoinName} (${baseCoin?.Symbol})"
