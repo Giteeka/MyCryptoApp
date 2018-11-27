@@ -1,7 +1,7 @@
 MyCryptoApp
 ==============
 
-Demo project for fetching all crypto coins from API and Calculator for crypto currency to fial currency or cryto currency to another cryoti currency conversion.
+Demo project where fetch all crypto coins from API and calculate crypto to fiat or crypto to another crypto conversion
 --------------
 **Convert Crypto currency to top 10 Fiat currency like USD, INR etc. Also convert one crypto currecncy to another crypto currency like BTC, ETH, LTC**
 
