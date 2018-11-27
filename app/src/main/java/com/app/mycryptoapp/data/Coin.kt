@@ -27,5 +27,3 @@ data class Coin(@PrimaryKey(autoGenerate = true) val cId: Int
 
 
 }
-
-//git remote add origin https://gitr does not match a
